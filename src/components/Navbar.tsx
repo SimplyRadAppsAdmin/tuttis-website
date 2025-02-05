@@ -1,33 +1,52 @@
 "use client";
 
-import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { JSX, useEffect, useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Box,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { JSX, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // Optional: Highlight active page
 
 const navItems = ["Menu", "About", "Hiring", "Contact", "Order"];
 
-export default function Navbar(): JSX.Element {
+export default function Navbar(): JSX.Element | null {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname(); // Optional: Get current route
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null; // Avoid SSR mismatches
 
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#000" }}>
-        <Toolbar>
+      <AppBar position="sticky" sx={{ backgroundColor: "#fff", color: "#000", boxShadow: "none", borderBottom: "1px solid #ddd" }}>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          {/* Mobile Menu Button */}
           <IconButton
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ display: { md: "none" }, mr: 2 }}
-            onClick={handleDrawerToggle}
+            sx={{ display: { xs: "block", md: "none" }, mr: 2 }}
+            onClick={() => setMobileOpen(true)}
           >
             <MenuIcon />
           </IconButton>
 
+          {/* Logo */}
           <Typography
             variant="h6"
             component="div"
@@ -38,18 +57,31 @@ export default function Navbar(): JSX.Element {
             </Link>
           </Typography>
 
-          <Button color="inherit" href="/order">
-            Order
-          </Button>
+          {/* Desktop Navigation */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+            {navItems.map((item) => (
+              <Button
+                key={item}
+                href={`/${item.toLowerCase()}`}
+                color="inherit"
+                sx={{
+                  fontWeight: pathname === `/${item.toLowerCase()}` ? "bold" : "normal", // Optional: Highlight active page
+                  borderBottom: pathname === `/${item.toLowerCase()}` ? "2px solid black" : "none",
+                }}
+              >
+                {item}
+              </Button>
+            ))}
+          </Box>
         </Toolbar>
       </AppBar>
 
       {/* Mobile Drawer Menu */}
-      <Drawer anchor="left" open={mobileOpen} onClose={handleDrawerToggle}>
+      <Drawer anchor="left" open={mobileOpen} onClose={() => setMobileOpen(false)}>
         <List>
           {navItems.map((item) => (
             <ListItem key={item} disablePadding>
-              <ListItemButton component={Link} href={`/${item.toLowerCase()}`} onClick={handleDrawerToggle}>
+              <ListItemButton component={Link} href={`/${item.toLowerCase()}`} onClick={() => setMobileOpen(false)}>
                 <ListItemText primary={item} />
               </ListItemButton>
             </ListItem>
