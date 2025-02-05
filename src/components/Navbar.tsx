@@ -1,6 +1,6 @@
 "use client";
 
-import { AppBar, Box, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, IconButton, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { JSX, useState } from "react";
 import Link from "next/link";
@@ -18,7 +18,6 @@ export default function Navbar(): JSX.Element {
     <>
       <AppBar position="static" sx={{ backgroundColor: "#fff", color: "#000" }}>
         <Toolbar>
-          {/* Mobile Menu Button */}
           <IconButton
             edge="start"
             color="inherit"
@@ -29,7 +28,6 @@ export default function Navbar(): JSX.Element {
             <MenuIcon />
           </IconButton>
 
-          {/* Logo */}
           <Typography
             variant="h6"
             component="div"
@@ -40,38 +38,18 @@ export default function Navbar(): JSX.Element {
             </Link>
           </Typography>
 
-          {/* Desktop Nav Links */}
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            {navItems.map((item) => (
-              <Button
-                key={item}
-                color="inherit"
-                sx={{ textTransform: "none", mx: 1 }}
-                component={Link}
-                href={`/${item.toLowerCase()}`}
-              >
-                {item}
-              </Button>
-            ))}
-          </Box>
+          <Button color="inherit" href="/order">
+            Order
+          </Button>
         </Toolbar>
       </AppBar>
 
       {/* Mobile Drawer Menu */}
-      <Drawer
-        anchor="left"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        sx={{ display: { md: "none" } }}
-      >
+      <Drawer anchor="left" open={mobileOpen} onClose={handleDrawerToggle}>
         <List>
           {navItems.map((item) => (
             <ListItem key={item} disablePadding>
-              <ListItemButton
-                component={Link}
-                href={`/${item.toLowerCase()}`}
-                onClick={handleDrawerToggle}
-              >
+              <ListItemButton component={Link} href={`/${item.toLowerCase()}`} onClick={handleDrawerToggle}>
                 <ListItemText primary={item} />
               </ListItemButton>
             </ListItem>

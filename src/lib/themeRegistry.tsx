@@ -1,34 +1,26 @@
 "use client";
 
 import * as React from "react";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import { useServerInsertedHTML } from "next/navigation";
+import { ThemeProvider, createTheme } from "@mui/material";
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
+import { useServerInsertedHTML } from "next/navigation";
 
-export default function ThemeRegistry({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [cache] = React.useState(() =>
-    createCache({ key: "mui", prepend: true })
-  );
+// ✅ Create Emotion Cache
+const muiCache = createCache({ key: "mui", prepend: true });
 
+export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
   useServerInsertedHTML(() => (
     <style
       dangerouslySetInnerHTML={{
-        __html: Object.values(cache.inserted).join(" "),
+        __html: Object.values(muiCache.inserted).join(" "),
       }}
     />
   ));
 
-  const theme = createTheme(); // Customize theme here if needed
-
   return (
-    <CacheProvider value={cache}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <CacheProvider value={muiCache}>
+      <ThemeProvider theme={createTheme()}>
         {children}
       </ThemeProvider>
     </CacheProvider>
