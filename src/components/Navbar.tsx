@@ -33,19 +33,16 @@ export default function Navbar(): JSX.Element | null {
 
   return (
     <>
-      <AppBar position="sticky" sx={{ backgroundColor: "#fff", color: "#000", boxShadow: "none", borderBottom: "1px solid #ddd" }}>
+      <AppBar
+        position="sticky"
+        sx={{
+          backgroundColor: "#fff",
+          color: "#000",
+          boxShadow: "none",
+          borderBottom: "1px solid #ddd",
+        }}
+      >
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          {/* Mobile Menu Button */}
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ display: { xs: "block", md: "none" }, mr: 2 }}
-            onClick={() => setMobileOpen(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-
           {/* Logo */}
           <Typography
             variant="h6"
@@ -65,23 +62,47 @@ export default function Navbar(): JSX.Element | null {
                 href={`/${item.toLowerCase()}`}
                 color="inherit"
                 sx={{
-                  fontWeight: pathname === `/${item.toLowerCase()}` ? "bold" : "normal", // Optional: Highlight active page
-                  borderBottom: pathname === `/${item.toLowerCase()}` ? "2px solid black" : "none",
+                  fontWeight:
+                    pathname === `/${item.toLowerCase()}` ? "bold" : "normal",
+                  borderBottom:
+                    pathname === `/${item.toLowerCase()}`
+                      ? "2px solid black"
+                      : "none",
                 }}
               >
                 {item}
               </Button>
             ))}
           </Box>
+
+          {/* Mobile Menu Button */}
+
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ display: { xs: "block", md: "none" }, mr: 2 }}
+            onClick={() => setMobileOpen(true)}
+          >
+            <MenuIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
 
       {/* Mobile Drawer Menu */}
-      <Drawer anchor="left" open={mobileOpen} onClose={() => setMobileOpen(false)}>
+      <Drawer
+        anchor="right"
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+      >
         <List>
           {navItems.map((item) => (
             <ListItem key={item} disablePadding>
-              <ListItemButton component={Link} href={`/${item.toLowerCase()}`} onClick={() => setMobileOpen(false)}>
+              <ListItemButton
+                component={Link}
+                href={`/${item.toLowerCase()}`}
+                onClick={() => setMobileOpen(false)}
+              >
                 <ListItemText primary={item} />
               </ListItemButton>
             </ListItem>
