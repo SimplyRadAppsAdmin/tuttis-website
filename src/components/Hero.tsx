@@ -1,59 +1,94 @@
 "use client";
 
-import React, { JSX } from "react";
-import { Box, Typography, Button, Container } from "@mui/material";
+import { Box } from "@mui/material";
 import { styled } from "@mui/system";
+import Image from "next/image";
+import { JSX } from "react";
 
-const HeroContainer = styled(Box)({
-  position: "relative",
-  width: "100%",
-  height: "500px",
-  backgroundImage: "url('/hero-bg.svg')", // Replace with actual image
-  backgroundSize: "cover",
-  backgroundPosition: "center",
+const HeroSection = styled(Box)({
   display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  textAlign: "center",
-  color: "#fff",
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dark overlay
-    zIndex: 1,
+  width: "100%",
+  minHeight: "650px",
+  position: "relative",
+  "@media (max-width: 900px)": {
+    flexDirection: "column", // Stack for mobile
+    minHeight: "auto",
   },
 });
 
-const HeroContent = styled(Container)({
+const HeroLeft = styled(Box)({
   position: "relative",
-  zIndex: 2,
-  maxWidth: "600px",
-  padding: "20px",
+  backgroundImage: "url('/hero-bg.svg')",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  width: "45%",
+  flexGrow: 1, // Allow it to scale naturally
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "#fff",
+  padding: "40px",
+  overflow: "hidden",
+  "@media (max-width: 900px)": {
+    width: "100%",
+    height: "auto",
+    minHeight: "700px", // INCREASED HEIGHT FOR MID-SIZED SCREENS
+  },
+  "@media (max-width: 550px)": {
+    minHeight: "750px", // ADDS MORE SPACE AT THE BOTTOM ON SMALL SCREENS
+  },
+});
+
+const HeroLayover = styled(Box)({
+  position: "absolute",
+  top: "-5%", // Move overlay slightly up
+  left: "0",
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  pointerEvents: "none",
+  "@media (max-width: 900px)": {
+    top: "-2%", // Adjust for mobile to keep proportions correct
+  },
+});
+
+const HeroRight = styled(Box)({
+  position: "relative",
+  width: "55%",
+  flexGrow: 1, // Allow flexible height
+  "@media (max-width: 900px)": {
+    width: "100%",
+    height: "auto",
+  },
 });
 
 export default function Hero(): JSX.Element {
   return (
-    <HeroContainer>
-      <HeroContent>
-        <Typography variant="h2" fontWeight="bold">
-          Tutti a Tavola a Mangiare!
-        </Typography>
-        <Typography variant="h6" mt={2}>
-          Hand-crafted Italian cuisine in Concord, NC.
-        </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ mt: 3, backgroundColor: "#b71c1c" }} // Custom red
-          href="/menu"
-        >
-          View Menu
-        </Button>
-      </HeroContent>
-    </HeroContainer>
+    <HeroSection>
+      {/* Left Side (Hero BG with Overlay) */}
+      <HeroLeft>
+        <HeroLayover>
+          <Image
+            src="/tutti-hero-layover.svg"
+            alt="Tutti's Hero Overlay"
+            layout="intrinsic"
+            width={600}
+            height={500}
+          />
+        </HeroLayover>
+      </HeroLeft>
+
+      {/* Right Side (Deli Counter Image) */}
+      <HeroRight>
+        <Image
+          src="/deli-counter.svg"
+          alt="Deli Counter"
+          layout="fill"
+          objectFit="cover"
+        />
+      </HeroRight>
+    </HeroSection>
   );
 }

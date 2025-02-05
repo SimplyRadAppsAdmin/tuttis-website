@@ -33,15 +33,59 @@ export default function Navbar(): JSX.Element | null {
 
   return (
     <>
+      {/* Address, Phone, and Email Bar */}
+      <Box
+        sx={{
+          backgroundColor: "#F2E1D4",
+          padding: "5px 0",
+          textAlign: "center",
+          fontSize: "14px",
+          fontWeight: "500",
+          fontFamily: "'Lora', serif",
+          color: "#000",
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          "@media (max-width: 768px)": {
+            display: "none", // Hide address bar on mobile
+          },
+        }}
+      >
+        <Box sx={{ borderBottom: "1px solid black", display: "inline" }}>
+          235 Cabarrus Ave. E, Concord, NC 28025
+        </Box>
+        <span>|</span>
+        <Box sx={{ borderBottom: "1px solid black", display: "inline" }}>
+          704.786.9992
+        </Box>
+        <span>|</span>
+        <Box sx={{ borderBottom: "1px solid black", display: "inline" }}>
+          <Link
+            href="mailto:tuttismarket@gmail.com"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            tuttismarket@gmail.com
+          </Link>
+        </Box>
+      </Box>
+
       <AppBar
         position="sticky"
         sx={{
-          backgroundColor: "#fff",
+          backgroundColor: "#F2E1D4", // Matches global background
           color: "#000",
           boxShadow: "none",
           borderBottom: "1px solid #ddd",
         }}
       >
+        {/* Dotted Line - Always Visible */}
+        <Box
+          sx={{
+            width: "100%",
+            height: ".5px",
+            borderStyle: "dashed",
+          }}
+        />
         <Toolbar sx={{ justifyContent: "space-between" }}>
           {/* Logo */}
           <Typography
@@ -76,7 +120,6 @@ export default function Navbar(): JSX.Element | null {
           </Box>
 
           {/* Mobile Menu Button */}
-
           <IconButton
             edge="start"
             color="inherit"

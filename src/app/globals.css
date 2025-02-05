@@ -14,6 +14,9 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-color: #F2E1D4;
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 body {
