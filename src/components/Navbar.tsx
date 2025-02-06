@@ -78,12 +78,12 @@ export default function Navbar(): JSX.Element | null {
           borderBottom: "1px solid #ddd",
         }}
       >
-        {/* Dotted Line - Always Visible */}
         <Box
           sx={{
             width: "100%",
-            height: ".5px",
-            borderStyle: "dashed",
+            borderBottom: "2px dotted black", // Proper dotted line
+            marginTop: "8px", // Moves it closer
+            marginBottom: "-10px"
           }}
         />
         <Toolbar sx={{ justifyContent: "space-between" }}>

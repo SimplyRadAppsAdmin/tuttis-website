@@ -43,3 +43,14 @@ a {
     color-scheme: dark;
   }
 }
+
+.dotted-line {
+  width: 100%;
+  border-bottom: 1px dotted black; /* Ensures only bottom is dotted */
+  margin-top: 4px; /* Adjusts spacing */
+}
+@media (prefers-color-scheme: dark) {
+  .dotted-line {
+    border-bottom: 1px dotted white; /* Ensures only bottom is dotted */
+  }
+}
